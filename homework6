@@ -1,0 +1,125 @@
+#Создать программно файл в текстовом формате, записать
+#в него построчно данные, вводимые пользователем.
+#Об окончании ввода данных свидетельствует пустая строка.
+
+
+my_f = open('1.txt', 'w')
+line = input('Введите текст \n')
+while line:
+    my_f.writelines(line)
+    line = input('Введите текст \n')
+    if not line:
+        break
+
+my_f.close()
+my_f = open('1.txt', 'r')
+content = my_f.readlines()
+print(content)
+my_f.close()
+
+
+
+#Создать текстовый файл (не программно), сохранить в нем несколько строк,
+#выполнить подсчет количества строк, количества слов в каждой строке.
+
+my_file = open('1.txt', 'r')
+content = my_file.read()
+print(f'Содержимое файла: \n {content}')
+my_file = open('1.txt', 'r')
+content = my_file.readlines()
+print(f'Количество строк в файле - {len(content)}')
+my_file = open('1.txt', 'r')
+content = my_file.readlines()
+for i in range(len(content)):
+    print(f'Окличество символов {i + 1} - ой строки {len(content[i])}')
+my_file = open('1.txt', 'r')
+content = my_file.read()
+content = content.split()
+print(f'Общее количество слов - {len(content)}')
+my_file.close()
+
+
+
+
+#Создать (не программно) текстовый файл со следующим содержимым:
+#One — 1
+#Two — 2
+#Three — 3
+#Four — 4
+#Необходимо написать программу, открывающую файл на чтение и считывающую построчно данные.
+#При этом английские числительные должны заменяться на русские.
+#Новый блок строк должен записываться в новый текстовый файл.
+
+
+my_f = open("1.txt", "r")
+content = my_f.readline()
+content = content[:-1]  
+with open("1.txt", "w") as f_obj:
+    print(content.replace('One', 'Один'), file=f_obj)
+
+content = my_f.readline()
+content = content[:-1]  
+with open("1.txt", "a") as f_obj:
+    print(content.replace('Two', 'Два'), file=f_obj)
+
+content = my_f.readline()
+content = content[:-1]  
+with open("1.txt", "a") as f_obj:
+    print(content.replace('Three', 'Три'), file=f_obj)
+
+content = my_f.readline()
+with open("1.txt", "a") as f_obj:
+    print(content.replace('Four', 'Четыре'), file=f_obj)
+    
+    
+#Задание на закрепление знаний по модулю json. Есть файл orders
+#в формате JSON с информацией о заказах. Написать скрипт, автоматизирующий
+#его заполнение данными.   
+
+import json
+
+
+def write_order_to_json(item, quantity, price, buyer, date):
+    data = {
+        'item': item,
+        'quantity': quantity,
+        'price': price,
+        'buyer': buyer,
+        'date': date,
+    }
+    with open('orders.json', 'w') as write_json:
+        json.dump(data, write_json, indent=4)
+
+
+write_order_to_json(
+    item=['принтер', 'scaner'],
+    quantity=[10, 20],
+    price=[6700, 10000],
+    buyer=['Ivanov I.I.', 'Petrov P.P.'],
+    date=['24.09.2017', '11.01.2018'])
+    
+###Результат ниже
+'''
+{
+    "item": [
+        "\u043f\u0440\u0438\u043d\u0442\u0435\u0440",
+        "scaner"
+    ],
+    "quantity": [
+        10,
+        20
+    ],
+    "price": [
+        6700,
+        10000
+    ],
+    "buyer": [
+        "Ivanov I.I.",
+        "Petrov P.P."
+    ],
+    "date": [
+        "24.09.2017",
+        "11.01.2018"
+    ]
+}    
+ '''   
